@@ -9,11 +9,21 @@ public class PlayerControls : MonoBehaviour
     public float maxSpeed=5;
     public float thrust = 5;
     public float jumpStrength=5;
+    public GameManager manager;
+    string equippedWeapon;
     bool inAir=false;
+
+    private void Start()
+    {
+        manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        equippedWeapon = manager.playerEquippedWeapon;
+    }
 
     // Update is called once per frame
     void Update()
     {
+
+        //Movement Controls
         inAir = (rb.velocityY < -.01) || (rb.velocityY > .01);
         if (Input.GetKey("a") && !Input.GetKey("d"))
         {
@@ -29,6 +39,12 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetKey("w")&& !inAir){
             rb.AddForceY(jumpStrength, ForceMode2D.Impulse);
             inAir = true;
+        }
+
+        //Attack controls
+        if (Input.GetMouseButtonDown(0))
+        {
+
         }
     }
 }
