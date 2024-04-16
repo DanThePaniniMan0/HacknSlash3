@@ -6,12 +6,16 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     public Rigidbody2D rb;
+
     public float maxSpeed=5;
     public float thrust = 5;
     public float jumpStrength=5;
+    bool inAir=false;
+
     public GameManager manager;
     string equippedWeapon;
-    bool inAir=false;
+    public GameObject weapon;
+    
 
     private void Start()
     {
@@ -44,7 +48,7 @@ public class PlayerControls : MonoBehaviour
         //Attack controls
         if (Input.GetMouseButtonDown(0))
         {
-
+            weapon.GetComponent<WeaponBehavior>().Attack("");
         }
     }
 }
