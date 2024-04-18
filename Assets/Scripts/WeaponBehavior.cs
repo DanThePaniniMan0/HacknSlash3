@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class WeaponBehavior : MonoBehaviour
 {
-    BoxCollider2D weilderCollider;
-    Transform weilderTransform;
+    BoxCollider2D wielderCollider;
+    Transform wielderTransform;
+    public GameObject wielder;
 
     BoxCollider2D weaponCollider;
     Transform selfTransform;
@@ -13,23 +14,26 @@ public class WeaponBehavior : MonoBehaviour
 
     bool attacking = false;
     bool pullingBack = false;
-    float rotationVelocity = 0;
+    public float rotationVelocity = 0.5f;
+    float currentRotationVelocity;
 
     float originalRotation;
     float finalRotation;
+
+    public float sweepAngle = 90;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        weilderCollider = GetComponentInParent<BoxCollider2D>();
-        weilderTransform = GetComponentInParent<Transform>();
+        wielderTransform = wielder.GetComponent<Transform>();
+        wielderCollider = wielder.GetComponent<BoxCollider2D>();
+
         weaponCollider = GetComponent<BoxCollider2D>();
         selfTransform = GetComponent<Transform>();
-        //selfRigidbody = GetComponent<Rigidbody2D>();
 
         originalRotation = selfTransform.eulerAngles.z;
-        finalRotation = selfTransform.eulerAngles.z-30;
+        finalRotation = selfTransform.eulerAngles.z-sweepAngle;
        
     }
 
@@ -37,33 +41,30 @@ public class WeaponBehavior : MonoBehaviour
     void Update()
     {
         
-        if (pullingBack && originalRotation <= selfTransform.eulerAngles.z)
+        if (pullingBack)
         {
-            attacking = false; pullingBack = false;
-            Debug.Log("Thing4");
-        }
-        else if (attacking && finalRotation <= selfTransform.eulerAngles.z)
+            selfTransform.RotateAround(wielderTransform.position + new Vector3(0.5f, 0, 0),Vector3.forward,currentRotationVelocity);
+        }else if (attacking)
         {
-            //selfRigidbody.AddTorque(1, ForceMode2D.Force);
-            selfTransform.Rotate(0, 0, -1*rotationVelocity);
-            pullingBack = true; Debug.Log("Thing3");
+            selfTransform.RotateAround(wielderTransform.position + new Vector3(0.5f, 0, 0), Vector3.forward, -1*currentRotationVelocity);
+            //Debug.Log($"{wielderTransform.position.x:f2}{wielderTransform.position.y:f2}{wielderTransform.position.z:f2}");
         }
-        else if (pullingBack)
+        if (selfTransform.eulerAngles.z <= finalRotation)
         {
-            selfTransform.Rotate(0, 0, rotationVelocity);Debug.Log("Thing2");
+            pullingBack = true;
         }
-        //I think u messed this (^^^) part up, might have to remake
-
+        else if(attacking && selfTransform.eulerAngles.z >= originalRotation)
+        {
+            attacking = false;pullingBack = false;
+        }
     }
 
     public void Attack(string weaponMode){
 
-        /*if(!attacking&&!pullingBack)
-            selfRigidbody.AddTorque(1, ForceMode2D.Force);
-        attacking = true;*/
+        
         if (!attacking && !pullingBack)
         {
-            rotationVelocity = 1;
+            currentRotationVelocity = rotationVelocity;
             attacking = true;
         }
     }

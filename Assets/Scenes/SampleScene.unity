@@ -211,6 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856f93b9f26e87545925ec0890412c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wielder: {fileID: 1747700764}
+  rotationVelocity: 1
+  sweepAngle: 60
 --- !u!212 &425981636
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -885,7 +888,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1747700766
 BoxCollider2D:
   m_ObjectHideFlags: 0
