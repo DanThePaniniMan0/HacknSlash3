@@ -25,6 +25,8 @@ public class WeaponBehavior : MonoBehaviour
     public float knockBack=5;
     public float damage = 50;
 
+    public string facing="Right";
+
 
 
     // Start is called before the first frame update
@@ -37,7 +39,7 @@ public class WeaponBehavior : MonoBehaviour
         selfTransform = GetComponent<Transform>();
 
         originalRotation = selfTransform.eulerAngles.z;
-        finalRotation = selfTransform.eulerAngles.z-sweepAngle;
+        finalRotation = originalRotation-sweepAngle;
        
     }
 
@@ -45,27 +47,75 @@ public class WeaponBehavior : MonoBehaviour
     void Update()
     {
         //Add directions to attacking, need to enclose the whole thing in if statement, otherwise it will spin
-        if (pullingBack)
+        if (facing == "Right")
         {
-            selfTransform.RotateAround(wielderTransform.position + new Vector3(0.1f, 0, 0),Vector3.forward,currentRotationVelocity);
-        }else if (attacking)
-        {
-            selfTransform.RotateAround(wielderTransform.position + new Vector3(0.1f, 0, 0), Vector3.forward, -1*currentRotationVelocity);
-            //Debug.Log($"{wielderTransform.position.x:f2}{wielderTransform.position.y:f2}{wielderTransform.position.z:f2}");
+            if (pullingBack)
+            {
+                selfTransform.RotateAround(wielderTransform.position + new Vector3(0.1f, 0, 0),Vector3.forward,currentRotationVelocity);
+            }else if (attacking)
+            {
+                selfTransform.RotateAround(wielderTransform.position + new Vector3(0.1f, 0, 0), Vector3.forward, -1*currentRotationVelocity);
+                //Debug.Log($"{wielderTransform.position.x:f2}{wielderTransform.position.y:f2}{wielderTransform.position.z:f2}");
+            }
+            if (attacking && selfTransform.eulerAngles.z <= finalRotation)
+            {
+                pullingBack = true;
+                Debug.Log($"Euler Angle z: {selfTransform.eulerAngles.z}");
+                Debug.Log($"Final Rotation Right:{finalRotation}");
+            }
+            else if(attacking && selfTransform.eulerAngles.z >= originalRotation)
+            {
+                attacking = false;pullingBack = false;
+                Debug.Log($"Euler Angle z:{selfTransform.eulerAngles.z:f2}");
+                Debug.Log($"Original Rotation Right:{originalRotation}");
+            }
+
         }
-        if (selfTransform.eulerAngles.z <= finalRotation)
+        else if (facing == "Left")
         {
-            pullingBack = true;
+            if (pullingBack)
+            {
+                selfTransform.RotateAround(wielderTransform.position - new Vector3(0.1f, 0, 0), Vector3.forward, -1*currentRotationVelocity);
+            }
+            else if (attacking)
+            {
+                selfTransform.RotateAround(wielderTransform.position - new Vector3(0.1f, 0, 0), Vector3.forward, currentRotationVelocity);
+                //Debug.Log($"{wielderTransform.position.x:f2}{wielderTransform.position.y:f2}{wielderTransform.position.z:f2}");
+            }
+            if (attacking && selfTransform.eulerAngles.z >= 360-finalRotation)
+            {
+                pullingBack = true;
+                Debug.Log("Pulling Back Left Side");
+                Debug.Log($"Euler Angle z:{selfTransform.eulerAngles.z:f2}");
+                Debug.Log($"Final Rotation Left:{finalRotation}");
+            }
+            else if (attacking && selfTransform.eulerAngles.z <= 360-originalRotation)
+            {
+                attacking = false; pullingBack = false;
+                Debug.Log("Attack Done Left Side");
+                Debug.Log($"Euler Angle z:{selfTransform.eulerAngles.z:f2}");
+                Debug.Log($"Original Rotation Left:{originalRotation}");
+            }
+
         }
-        else if(attacking && selfTransform.eulerAngles.z >= originalRotation)
+        else
         {
-            attacking = false;pullingBack = false;
+            Debug.Log("Weapon Behavior facing not recognized");
         }
+    }
+    public bool SetFacing(string f)
+    {
+        if (attacking)
+        {
+            return false;
+        }
+        facing = f;
+        return true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "NPC" && attacking)
+        if(collision.gameObject.tag == "NPC" && attacking && !pullingBack)
         {
             if (collision.gameObject.transform.position.x > selfTransform.position.x)
             {

@@ -38,11 +38,12 @@ public class PlayerControls : MonoBehaviour
         {
             if(!(rb.velocityX < (-1 * maxSpeed)))
                 rb.AddForceX(thrust * -1, ForceMode2D.Force);
-            if (facing != "Left")
+            if (facing != "Left" && wTr.GetComponent<WeaponBehavior>().SetFacing("Left"))
             {
                 facing = "Left";
                 wTr.localPosition = new Vector3(-1 * wTr.localPosition.x,wTr.localPosition.y,wTr.localPosition.z);
                 wTr.eulerAngles = new Vector3(wTr.eulerAngles.x, wTr.eulerAngles.y, -1 * wTr.eulerAngles.z);
+                
             }
             
         }
@@ -50,11 +51,12 @@ public class PlayerControls : MonoBehaviour
         {
             if (!(rb.velocityX > maxSpeed))
                 rb.AddForceX(thrust, ForceMode2D.Force);
-            if (facing != "Right")
+            if (facing != "Right" && wTr.GetComponent<WeaponBehavior>().SetFacing("Right"))
             {
                 facing = "Right";
                 wTr.localPosition = new Vector3(-1 * wTr.localPosition.x, wTr.localPosition.y, wTr.localPosition.z);
                 wTr.eulerAngles = new Vector3(wTr.eulerAngles.x, wTr.eulerAngles.y, -1 * wTr.eulerAngles.z);
+                wTr.GetComponent<WeaponBehavior>().SetFacing(facing);
             }
         }
         else
@@ -72,7 +74,7 @@ public class PlayerControls : MonoBehaviour
             weapon.GetComponent<WeaponBehavior>().Attack("");
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Ground")
         {
@@ -87,5 +89,5 @@ public class PlayerControls : MonoBehaviour
         {
             rb.gravityScale = 1;
         }
-    }
+    }*/
 }
