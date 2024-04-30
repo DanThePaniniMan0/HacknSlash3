@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    Rigidbody2D selfRigidBody;
 
     public float maxSpeed=5;
     public float thrust = 5;
@@ -18,14 +18,18 @@ public class PlayerControls : MonoBehaviour
     public GameManager manager;
     string equippedWeapon;
     public GameObject weapon;
-    public Transform wTr;
+    public Transform weaponTransform;
     
 
     private void Start()
     {
+        selfRigidBody= GetComponent<Rigidbody2D>();
+
         manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         equippedWeapon = manager.playerEquippedWeapon;
-        wTr=weapon.GetComponent<Transform>();
+        weaponTransform=weapon.GetComponent<Transform>();
+
+        weapon.GetComponent<WeaponBehavior>().SetWeaponValues(equippedWeapon);
     }
 
     // Update is called once per frame
@@ -33,38 +37,39 @@ public class PlayerControls : MonoBehaviour
     {
 
         //Movement Controls
-        inAir = (rb.velocityY < -.01) || (rb.velocityY > .01);
+        inAir = (selfRigidBody.velocityY < -.01) || (selfRigidBody.velocityY > .01);
         if (Input.GetKey("a") && !Input.GetKey("d"))
         {
-            if(!(rb.velocityX < (-1 * maxSpeed)))
-                rb.AddForceX(thrust * -1, ForceMode2D.Force);
-            if (facing != "Left" && wTr.GetComponent<WeaponBehavior>().SetFacing("Left"))
+            if(!(selfRigidBody.velocityX < (-1 * maxSpeed)))
+                selfRigidBody.AddForceX(thrust * -1, ForceMode2D.Force);
+            if (facing != "Left" && weaponTransform.GetComponent<WeaponBehavior>().SetFacing("Left"))
             {
+                weaponTransform.GetComponent<WeaponBehavior>().SetFacing("Left");//
                 facing = "Left";
-                wTr.localPosition = new Vector3(-1 * wTr.localPosition.x,wTr.localPosition.y,wTr.localPosition.z);
-                wTr.eulerAngles = new Vector3(wTr.eulerAngles.x, wTr.eulerAngles.y, -1 * wTr.eulerAngles.z);
+                weaponTransform.localPosition = new Vector3(-1 * weaponTransform.localPosition.x,weaponTransform.localPosition.y,weaponTransform.localPosition.z);
+                weaponTransform.eulerAngles = new Vector3(weaponTransform.eulerAngles.x, weaponTransform.eulerAngles.y, -1 * weaponTransform.eulerAngles.z);
                 
             }
             
         }
         else if (Input.GetKey("d") && !Input.GetKey("a"))
         {
-            if (!(rb.velocityX > maxSpeed))
-                rb.AddForceX(thrust, ForceMode2D.Force);
-            if (facing != "Right" && wTr.GetComponent<WeaponBehavior>().SetFacing("Right"))
+            if (!(selfRigidBody.velocityX > maxSpeed))
+                selfRigidBody.AddForceX(thrust, ForceMode2D.Force);
+            if (facing != "Right" && weaponTransform.GetComponent<WeaponBehavior>().SetFacing("Right"))
             {
                 facing = "Right";
-                wTr.localPosition = new Vector3(-1 * wTr.localPosition.x, wTr.localPosition.y, wTr.localPosition.z);
-                wTr.eulerAngles = new Vector3(wTr.eulerAngles.x, wTr.eulerAngles.y, -1 * wTr.eulerAngles.z);
-                wTr.GetComponent<WeaponBehavior>().SetFacing(facing);
+                weaponTransform.localPosition = new Vector3(-1 * weaponTransform.localPosition.x, weaponTransform.localPosition.y, weaponTransform.localPosition.z);
+                weaponTransform.eulerAngles = new Vector3(weaponTransform.eulerAngles.x, weaponTransform.eulerAngles.y, -1 * weaponTransform.eulerAngles.z);
+                weaponTransform.GetComponent<WeaponBehavior>().SetFacing(facing);
             }
         }
         else
         {
-            rb.velocityX = 0;
+            selfRigidBody.velocityX = 0;
         }
         if (Input.GetKey("w")&& !inAir){
-            rb.AddForceY(jumpStrength, ForceMode2D.Impulse);
+            selfRigidBody.AddForceY(jumpStrength, ForceMode2D.Impulse);
             inAir = true;
         }
 
@@ -74,20 +79,4 @@ public class PlayerControls : MonoBehaviour
             weapon.GetComponent<WeaponBehavior>().Attack("");
         }
     }
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Ground")
-        {
-            rb.gravityScale = 0;
-            rb.velocityY = 0;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            rb.gravityScale = 1;
-        }
-    }*/
 }

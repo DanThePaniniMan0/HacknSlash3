@@ -14,18 +14,19 @@ public class WeaponBehavior : MonoBehaviour
 
     bool attacking = false;
     bool pullingBack = false;
-    public float rotationVelocity = 0.5f;
-    float currentRotationVelocity;
+    float currentAttackSpeed;
 
     float originalRotation;
     float finalRotation;
+    Vector3 offsetVector;
 
-    public float sweepAngle = 90;
+    public float sweepAngle = 120;
 
-    public float knockBack=5;
-    public float damage = 50;
+    float knockBack=5;
+    float damage = 50;
+    float attackSpeed = 0.5f;
 
-    public string facing="Right";
+    string facing="Right";
 
 
 
@@ -40,7 +41,35 @@ public class WeaponBehavior : MonoBehaviour
 
         originalRotation = selfTransform.eulerAngles.z;
         finalRotation = originalRotation-sweepAngle;
-       
+        offsetVector=new Vector3(selfTransform.localPosition.x,0,0);
+    }
+
+    public void SetWeaponValues(string weaponType)
+    {
+        switch (weaponType)
+        {
+            case ("Sword"):
+                attackSpeed = 0.5f;
+                knockBack = 2;
+                damage = 50;
+                selfTransform.localScale = new Vector3(0.2f, 1.5f, 1);
+                break;
+            case ("Dagger"):
+                attackSpeed = 1f;
+                knockBack = 2;
+                damage = 25;
+                selfTransform.localScale = new Vector3(0.2f, 0.8f, 1);
+                break;
+            case ("Fist"):
+                attackSpeed = 2f;
+                knockBack = 5;
+                damage = 10;
+                selfTransform.localScale = new Vector3(0.2f, 0.5f, 1);
+                break;
+            default:
+                Debug.Log("Weapon Behavior : SetWeaponValues: Unrecognized weapon type");
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -51,23 +80,19 @@ public class WeaponBehavior : MonoBehaviour
         {
             if (pullingBack)
             {
-                selfTransform.RotateAround(wielderTransform.position + new Vector3(0.1f, 0, 0),Vector3.forward,currentRotationVelocity);
+                selfTransform.RotateAround(wielderTransform.position + offsetVector,Vector3.forward,currentAttackSpeed);
             }else if (attacking)
             {
-                selfTransform.RotateAround(wielderTransform.position + new Vector3(0.1f, 0, 0), Vector3.forward, -1*currentRotationVelocity);
+                selfTransform.RotateAround(wielderTransform.position + offsetVector, Vector3.forward, -1*currentAttackSpeed);
                 //Debug.Log($"{wielderTransform.position.x:f2}{wielderTransform.position.y:f2}{wielderTransform.position.z:f2}");
             }
             if (attacking && selfTransform.eulerAngles.z <= finalRotation)
             {
                 pullingBack = true;
-                Debug.Log($"Euler Angle z: {selfTransform.eulerAngles.z}");
-                Debug.Log($"Final Rotation Right:{finalRotation}");
             }
             else if(attacking && selfTransform.eulerAngles.z >= originalRotation)
             {
                 attacking = false;pullingBack = false;
-                Debug.Log($"Euler Angle z:{selfTransform.eulerAngles.z:f2}");
-                Debug.Log($"Original Rotation Right:{originalRotation}");
             }
 
         }
@@ -75,26 +100,20 @@ public class WeaponBehavior : MonoBehaviour
         {
             if (pullingBack)
             {
-                selfTransform.RotateAround(wielderTransform.position - new Vector3(0.1f, 0, 0), Vector3.forward, -1*currentRotationVelocity);
+                selfTransform.RotateAround(wielderTransform.position - offsetVector, Vector3.forward, -1*currentAttackSpeed);
             }
             else if (attacking)
             {
-                selfTransform.RotateAround(wielderTransform.position - new Vector3(0.1f, 0, 0), Vector3.forward, currentRotationVelocity);
+                selfTransform.RotateAround(wielderTransform.position - offsetVector, Vector3.forward, currentAttackSpeed);
                 //Debug.Log($"{wielderTransform.position.x:f2}{wielderTransform.position.y:f2}{wielderTransform.position.z:f2}");
             }
             if (attacking && selfTransform.eulerAngles.z >= 360-finalRotation)
             {
                 pullingBack = true;
-                Debug.Log("Pulling Back Left Side");
-                Debug.Log($"Euler Angle z:{selfTransform.eulerAngles.z:f2}");
-                Debug.Log($"Final Rotation Left:{finalRotation}");
             }
             else if (attacking && selfTransform.eulerAngles.z <= 360-originalRotation)
             {
                 attacking = false; pullingBack = false;
-                Debug.Log("Attack Done Left Side");
-                Debug.Log($"Euler Angle z:{selfTransform.eulerAngles.z:f2}");
-                Debug.Log($"Original Rotation Left:{originalRotation}");
             }
 
         }
@@ -120,12 +139,12 @@ public class WeaponBehavior : MonoBehaviour
             if (collision.gameObject.transform.position.x > selfTransform.position.x)
             {
                 collision.attachedRigidbody.AddForceX(knockBack, ForceMode2D.Impulse);
-                collision.attachedRigidbody.AddForceY(knockBack, ForceMode2D.Impulse);
+                collision.attachedRigidbody.AddForceY(1, ForceMode2D.Impulse);
             }
             else
             {
                 collision.attachedRigidbody.AddForceX(-knockBack, ForceMode2D.Impulse);
-                collision.attachedRigidbody.AddForceY(-knockBack, ForceMode2D.Impulse);
+                collision.attachedRigidbody.AddForceY(1, ForceMode2D.Impulse);
             }
             collision.gameObject.GetComponent<EnemyBehavior>().TakeDamage(damage);
         }
@@ -136,7 +155,7 @@ public class WeaponBehavior : MonoBehaviour
         
         if (!attacking && !pullingBack)
         {
-            currentRotationVelocity = rotationVelocity;
+            currentAttackSpeed = attackSpeed;
             attacking = true;
         }
     }
