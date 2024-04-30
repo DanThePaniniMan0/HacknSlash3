@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7063cbb4ff0aa264c9b90807112c0749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEquippedWeapon: Sword
+  playerEquippedWeapon: Fist
 --- !u!1 &425981633
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +431,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d53add03f0617414ebec111da55e5857, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 1080174683}
   - component: {fileID: 1080174687}
   m_Layer: 0
-  m_Name: TestSquare (1)
+  m_Name: TestNPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -723,7 +723,7 @@ GameObject:
   - component: {fileID: 1163519647}
   - component: {fileID: 1163519646}
   m_Layer: 0
-  m_Name: TestGround (1)
+  m_Name: TestWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -739,7 +739,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d53add03f0617414ebec111da55e5857, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 1747700765}
   - component: {fileID: 1747700769}
   m_Layer: 0
-  m_Name: TestSquare
+  m_Name: TestPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1021,7 +1021,6 @@ MonoBehaviour:
   health: 100
   manager: {fileID: 0}
   weapon: {fileID: 425981633}
-  weaponTransform: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

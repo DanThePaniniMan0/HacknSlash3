@@ -18,7 +18,7 @@ public class PlayerControls : MonoBehaviour
     public GameManager manager;
     string equippedWeapon;
     public GameObject weapon;
-    public Transform weaponTransform;
+    Transform weaponTransform;
     
 
     private void Start()
@@ -77,6 +77,17 @@ public class PlayerControls : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             weapon.GetComponent<WeaponBehavior>().Attack("");
+        }
+    }
+
+    public void TakeDamage(float damageAmount,float xKnockback=0,float yKnockback=0)
+    {
+        selfRigidBody.AddForceX(xKnockback, ForceMode2D.Impulse);
+        selfRigidBody.AddForceY(yKnockback, ForceMode2D.Impulse);
+        health -= damageAmount;
+        if (health <= 0)
+        {
+
         }
     }
 }
