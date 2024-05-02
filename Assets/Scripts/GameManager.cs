@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public string playerEquippedWeapon;
 
+    public Canvas startGUI;
+    public Canvas selectionGUI;
+
 
     // Start is called before the first frame update
     void Start()
@@ -17,5 +20,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void switchGUI()
+    {
+        startGUI.enabled = false;
+        selectionGUI.enabled = true;
     }
 }
