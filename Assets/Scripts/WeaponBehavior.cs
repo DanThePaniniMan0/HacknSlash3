@@ -29,6 +29,11 @@ public class WeaponBehavior : MonoBehaviour
     string facing="Right";
 
 
+    AudioSource swordSFX;
+    AudioSource daggerSFX;
+    AudioSource fistSFX;
+    AudioSource selectedWeaponSFX;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +47,12 @@ public class WeaponBehavior : MonoBehaviour
         originalRotation = selfTransform.eulerAngles.z;
         finalRotation = originalRotation-sweepAngle;
         offsetVector=new Vector3(selfTransform.localPosition.x,0,0);
+
+        AudioSource[] SFXList = GetComponents<AudioSource>();
+        swordSFX = SFXList[0];
+        daggerSFX = SFXList[1];
+        fistSFX = SFXList[2];
+        selectedWeaponSFX = swordSFX;
     }
 
     public void SetWeaponValues(string weaponType)
@@ -53,18 +64,21 @@ public class WeaponBehavior : MonoBehaviour
                 knockBack = 2;
                 damage = 50;
                 selfTransform.localScale = new Vector3(0.2f, 1.5f, 1);
+                selectedWeaponSFX = swordSFX;
                 break;
             case ("Dagger"):
                 attackSpeed = 1f;
                 knockBack = 2;
                 damage = 25;
                 selfTransform.localScale = new Vector3(0.2f, 0.8f, 1);
+                selectedWeaponSFX = daggerSFX;
                 break;
             case ("Fist"):
                 attackSpeed = 2f;
                 knockBack = 5;
                 damage = 10;
                 selfTransform.localScale = new Vector3(0.2f, 0.5f, 1);
+                selectedWeaponSFX= fistSFX;
                 break;
             default:
                 Debug.Log("Weapon Behavior : SetWeaponValues: Unrecognized weapon type");
@@ -157,6 +171,7 @@ public class WeaponBehavior : MonoBehaviour
         {
             currentAttackSpeed = attackSpeed;
             attacking = true;
+            selectedWeaponSFX.Play();
         }
     }
 }

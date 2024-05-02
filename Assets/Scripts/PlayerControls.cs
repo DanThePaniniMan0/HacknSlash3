@@ -19,6 +19,9 @@ public class PlayerControls : MonoBehaviour
     string equippedWeapon;
     public GameObject weapon;
     Transform weaponTransform;
+
+    AudioSource jumpSFX;
+    AudioSource runSFX;
     
 
     private void Start()
@@ -30,6 +33,10 @@ public class PlayerControls : MonoBehaviour
         weaponTransform=weapon.GetComponent<Transform>();
 
         weapon.GetComponent<WeaponBehavior>().SetWeaponValues(equippedWeapon);
+
+        runSFX= GetComponents<AudioSource>()[0];
+        jumpSFX = GetComponents<AudioSource>()[1];
+        
     }
 
     // Update is called once per frame
@@ -38,6 +45,10 @@ public class PlayerControls : MonoBehaviour
 
         //Movement Controls
         inAir = (selfRigidBody.velocityY < -.01) || (selfRigidBody.velocityY > .01);
+        if (inAir && runSFX.isPlaying)
+        {
+            runSFX.Stop();
+        }
         if (Input.GetKey("a") && !Input.GetKey("d"))
         {
             if(!(selfRigidBody.velocityX < (-1 * maxSpeed)))
@@ -49,6 +60,10 @@ public class PlayerControls : MonoBehaviour
                 weaponTransform.localPosition = new Vector3(-1 * weaponTransform.localPosition.x,weaponTransform.localPosition.y,weaponTransform.localPosition.z);
                 weaponTransform.eulerAngles = new Vector3(weaponTransform.eulerAngles.x, weaponTransform.eulerAngles.y, -1 * weaponTransform.eulerAngles.z);
                 
+            }
+            if (!runSFX.isPlaying && !inAir)
+            {
+                runSFX.Play();
             }
             
         }
@@ -63,14 +78,20 @@ public class PlayerControls : MonoBehaviour
                 weaponTransform.eulerAngles = new Vector3(weaponTransform.eulerAngles.x, weaponTransform.eulerAngles.y, -1 * weaponTransform.eulerAngles.z);
                 weaponTransform.GetComponent<WeaponBehavior>().SetFacing(facing);
             }
+            if (!runSFX.isPlaying && !inAir)
+            {
+                runSFX.Play();
+            }
         }
         else
         {
             selfRigidBody.velocityX = 0;
+            runSFX.Stop();
         }
         if (Input.GetKey("w")&& !inAir){
             selfRigidBody.AddForceY(jumpStrength, ForceMode2D.Impulse);
             inAir = true;
+            jumpSFX.Play();
         }
 
         //Attack controls
