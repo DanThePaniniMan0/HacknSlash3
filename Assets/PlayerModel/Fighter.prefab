@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3123324830135029154}
   - component: {fileID: 4284437589549922577}
   - component: {fileID: 4827322556972940202}
+  - component: {fileID: 189883616197435392}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Player
@@ -30,8 +31,8 @@ Transform:
   m_GameObject: {fileID: 470902638611850575}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4144541, y: 0.48647082, z: -0.04220893}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -11.06, y: 27.38, z: -0.04220893}
+  m_LocalScale: {x: 1.9536, y: 1.7636, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -133,7 +134,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &4284437589549922577
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -193,3 +194,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &189883616197435392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470902638611850575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6f3b1d1895cda42911fe9cc3462d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 470902638611850575}
+  anim: {fileID: 4827322556972940202}
+  health: 1500
