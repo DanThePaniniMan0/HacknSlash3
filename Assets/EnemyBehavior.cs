@@ -35,8 +35,9 @@ public class EnemyBehavior : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("deaded");
+            anim.SetBool("isAlive", false);
+            Destroy(rb);
             
-            Object.Destroy(this.gameObject);
         }
         float distance = player.GetComponent<Rigidbody2D>().position.x - rb.GetComponent<Rigidbody2D>().position.x;
         float spacex = Mathf.Abs(player.GetComponent<Rigidbody2D>().position.x - rb.GetComponent<Rigidbody2D>().position.x);
