@@ -21,6 +21,7 @@ public class WeaponBehavior : MonoBehaviour
     Vector3 offsetVector;
 
     public float sweepAngle = 120;
+    public float baseScale = 1f;
 
     float knockBack=5;
     float damage = 50;
@@ -63,21 +64,21 @@ public class WeaponBehavior : MonoBehaviour
                 attackSpeed = 0.5f;
                 knockBack = 2;
                 damage = 50;
-                selfTransform.localScale = new Vector3(0.2f, 1.5f, 1);
+                selfTransform.localScale = new Vector3(0.2f, 1.5f*baseScale, 1);
                 selectedWeaponSFX = swordSFX;
                 break;
             case ("Dagger"):
                 attackSpeed = 1f;
                 knockBack = 2;
                 damage = 25;
-                selfTransform.localScale = new Vector3(0.2f, 0.8f, 1);
+                selfTransform.localScale = new Vector3(0.2f, 0.8f*baseScale, 1);
                 selectedWeaponSFX = daggerSFX;
                 break;
             case ("Fist"):
                 attackSpeed = 2f;
                 knockBack = 5;
                 damage = 10;
-                selfTransform.localScale = new Vector3(0.2f, 0.5f, 1);
+                selfTransform.localScale = new Vector3(0.2f, 0.5f*baseScale, 1);
                 selectedWeaponSFX= fistSFX;
                 break;
             default:

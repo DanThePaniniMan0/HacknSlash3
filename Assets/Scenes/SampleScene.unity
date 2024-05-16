@@ -120,51 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &177562433
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 177562434}
-  - component: {fileID: 177562435}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: GameController
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &177562434
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 177562433}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2083922, y: 0.15309829, z: 0.0054630255}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &177562435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 177562433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7063cbb4ff0aa264c9b90807112c0749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerEquippedWeapon: Sword
 --- !u!1 &425981633
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wielder: {fileID: 1747700764}
   sweepAngle: 90
+  baseScale: 1
 --- !u!212 &425981636
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1744,4 +1700,3 @@ SceneRoots:
   - {fileID: 675291619}
   - {fileID: 1163519648}
   - {fileID: 1686745760}
-  - {fileID: 177562434}

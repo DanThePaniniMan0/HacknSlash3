@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 14751793}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,6 +152,7 @@ MonoBehaviour:
   playerEquippedWeapon: 
   startGUI: {fileID: 1151266456}
   selectionGUI: {fileID: 1970918385}
+  fighterText: {fileID: 1204307254}
 --- !u!4 &14751794
 Transform:
   m_ObjectHideFlags: 0
@@ -332,7 +333,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 275395452}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 14751793}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setFighter
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Fist
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &275395452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,13 +535,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 14751792}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 14751793}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -812,7 +825,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 732615863}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 14751793}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setFighter
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Sword
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &732615863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,7 +1236,7 @@ GameObject:
   - component: {fileID: 1204307257}
   - component: {fileID: 1204307256}
   m_Layer: 5
-  m_Name: Text (Legacy) (3)
+  m_Name: FighterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1806,7 +1831,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1970918382}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -1931,7 +1956,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2049376787}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 14751793}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setFighter
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Dagger
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2049376787
 MonoBehaviour:
   m_ObjectHideFlags: 0
