@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
     public Canvas startGUI;
     public Canvas selectionGUI;
     public GameObject fighterText;
+    //public GameObject UIOverlay;
 
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        //UIOverlay = GameObject.FindGameObjectWithTag("UIOverlay").GetComponent<Canvas>;
     }
 
     // Update is called once per frame
